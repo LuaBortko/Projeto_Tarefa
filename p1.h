@@ -21,3 +21,19 @@ int ler_arquivo(lista_tarefas *Lt, char nome[]);
 int salva_tarefa(lista_tarefas Lt, char nome[]);
 //p2
 int editar_tarefa(lista_tarefas *Lt);
+int filtro_prioridades(lista_tarefas Lt);
+int filtro_estado(lista_tarefas Lt);
+int filtro_categoria(lista_tarefas Lt);
+
+
+/*
+
+Filtrar tarefas por categoria: idem, mas com o filtro por categoria e com a prioridade ordenada da maior para a menor;
+
+Filtrar tarefas por prioridade e categoria: junção das duas funções anteriores em que o usuário escolhe a categoria e a prioridade e o seu programa deve exibir as tarefas que passarem pelos dois filtros;
+
+Exportar tarefas por prioridade: seu programa deve gerar um arquivo texto listando apenas as tarefas da prioridade escolhida pelo usuário. Cada tarefa deve estar em uma linha do arquivo na sequência: prioridade, categoria, estado e descrição;
+
+Exportar tarefas por categoria: idem ao anterior, inclusive no formato do arquivo exportado, sendo que as tarefas devem estar ordenadas por prioridade;
+
+Exportar tarefas por prioridade e categoria: junção dos filtros anteriores, mantendo o formato do arquivo que deve ser exportado.*/
