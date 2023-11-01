@@ -9,7 +9,7 @@ void print_menu(){
 
 int cria_tarefa(lista_tarefas *Lt){ // usa ponteiro pra funcao -> usa seta
     int estado;
-    char priority;
+    int prioridade;
     int qnt = 0; //só pra funcao
     if (Lt->quantidade < 100){
       printf("Digite a categoria da tarefa: ");
@@ -17,7 +17,14 @@ int cria_tarefa(lista_tarefas *Lt){ // usa ponteiro pra funcao -> usa seta
       printf("Digite a descricao da tarefa: ");
       scanf("%s", Lt->Tarefas[Lt->quantidade].descricao);
       printf("Digite a prioridade da tarefa (0-9): ");
-      scanf("%d", &Lt->Tarefas[Lt->quantidade].prioridade);
+      scanf("%d", &prioridade);
+      if(prioridade >= 0 & prioridade <= 9){
+        Lt->Tarefas[Lt->quantidade].prioridade = prioridade;
+      }
+      else{
+        printf("Prioridade inválida");
+        return 1;
+      }
       printf("1.tarefa não iniciada\n2.tarefa esta em andamento\n3.tarefa concluída\n");
       printf("Digite o número que indica o estado da tarefa\n: ");
       scanf("%d",&estado);
@@ -311,6 +318,7 @@ int filtro_categoria_prioridade(lista_tarefas Lt){
 }
 
 int exportar_prioridades(lista_tarefas Lt, char arquivo_ex[]){
+  int existe = 0;
   char arquivo[30] = "prioridade.txt";
   int prioridade;//variavel usada para guardar a resposta do usuario
   char resp[30];//variavel usada apenas para guardar a string da resposta dependendo do estado tarefa
@@ -326,6 +334,7 @@ int exportar_prioridades(lista_tarefas Lt, char arquivo_ex[]){
   }
   for (int indice = 0; indice < Lt.quantidade; indice++) {
     if(Lt.Tarefas[indice].prioridade == prioridade){
+      existe = 1;
       if(Lt.Tarefas[indice].estado == 0){
         strcpy(resp,"tarefa não iniciada");
       }
@@ -338,6 +347,10 @@ int exportar_prioridades(lista_tarefas Lt, char arquivo_ex[]){
       fprintf(f,"Categoria: %s \tDescricao: %s \tEstado da tarefa: %s \tPrioridade: %d \t\n ",Lt.Tarefas[indice].categoria, Lt.Tarefas[indice].descricao,resp, Lt.Tarefas[indice].prioridade);
   }
  }
+  if(existe == 0){
+    printf("Não tem tarefas com essa prioridade\n");
+    return 1;
+  }
   fclose(f);
   return 0;
 }
@@ -346,6 +359,7 @@ int exportar_categoria(lista_tarefas Lt, char arquivo_ex[]){
   char arquivo[30] = "categoria.txt";
   char categoria[100];
   char resp[30];
+  int existe = 0;
   printf("Digite a categoria das tarefas que queira mostrar: ");
   scanf("%s",categoria);
   if (Lt.quantidade == 0){
@@ -359,6 +373,7 @@ int exportar_categoria(lista_tarefas Lt, char arquivo_ex[]){
   for (int sequencia = 9; sequencia>= 0; sequencia-- ){ //Deixa a prioridade em ordem decrescente
     for (int indice = 0; indice<Lt.quantidade; indice++ ){
       if(strcmp(Lt.Tarefas[indice].categoria,categoria) == 0){
+        existe = 1;
         if(Lt.Tarefas[indice].prioridade == sequencia){
           if(Lt.Tarefas[indice].estado == 0){
             strcpy(resp,"tarefa não iniciada");
@@ -374,6 +389,10 @@ int exportar_categoria(lista_tarefas Lt, char arquivo_ex[]){
       }
     }
   }
+  if (existe == 0){
+    printf("Não tem tarefas com essa categoria\n");
+    return 1;
+  }
   fclose(f);
   return 0;
 }
@@ -382,6 +401,7 @@ int exportar_categoria_prioridade(lista_tarefas Lt, char arquivo_ex[]){
   char categoria[100];//variavel usada para guardar a resposta do usuario
   char arquivo[30] = "categoria_e_prioridade.txt";
   int prioridade;
+  int existe = 0;
   char resp[30];//variavel usada apenas para guardar a string da resposta dependendo do estado tarefa
   if (Lt.quantidade == 0){
     printf("Não tem tarefa \n");
@@ -397,7 +417,9 @@ int exportar_categoria_prioridade(lista_tarefas Lt, char arquivo_ex[]){
   scanf("%d",&prioridade);
   for (int indice = 0; indice<Lt.quantidade; indice++ ){
       if(strcmp(Lt.Tarefas[indice].categoria,categoria) == 0){
+        existe = 1;
         if(Lt.Tarefas[indice].prioridade == prioridade){
+          existe = 2;
           if(Lt.Tarefas[indice].estado == 0){
             strcpy(resp,"tarefa não iniciada");
           }
@@ -411,6 +433,14 @@ int exportar_categoria_prioridade(lista_tarefas Lt, char arquivo_ex[]){
      }
     }
    }
+  if(existe == 0){
+    printf("Não tem tarefas com essa categoria\n");
+    return 1;
+  }
+  else if(existe == 1){
+    printf("Não tem tarefas com essa prioridade nessa categoria\n");
+    return 1;
+  }
   fclose(f);
   return 0;
 }
