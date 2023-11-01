@@ -21,3 +21,10 @@ int ler_arquivo(lista_tarefas *Lt, char nome[]);
 int salva_tarefa(lista_tarefas Lt, char nome[]);
 //p2
 int editar_tarefa(lista_tarefas *Lt);
+int filtro_prioridades(lista_tarefas Lt);
+int filtro_estado(lista_tarefas Lt);
+int filtro_categoria(lista_tarefas Lt);
+int filtro_categoria_prioridade(lista_tarefas Lt);
+int exportar_prioridades(lista_tarefas Lt, char arquivo_ex[]);
+int exportar_categoria(lista_tarefas Lt, char arquivo_ex[]);
+int exportar_categoria_prioridade(lista_tarefas Lt, char arquivo_ex[]);
