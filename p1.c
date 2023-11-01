@@ -162,7 +162,7 @@ int editar_tarefa(lista_tarefas *Lt){
   return 0;
 }
 
-int filtro_prioridades(lista_tarefas Lt){ //Como colocaria uma mensagem que não existem tarefas com essa prioriade
+int filtro_prioridades(lista_tarefas Lt){ 
   int prioridade;//variavel usada para guardar a resposta do usuario
   char resp[30];//variavel usada apenas para guardar a string da resposta dependendo do estado tarefa
   int existe = 0;
